@@ -1,0 +1,24 @@
+{
+  "name": "wordpress-settings",
+  "version": "1.0.0",
+  "description": "Plugin that adds default settings to our Wordpress websites.",
+  "author": "PICUS <hello@picus.pt>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "commitmsg": "commitlint -e $GIT_PARAMS"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^6.1.0",
+    "@commitlint/config-conventional": "^6.1.0",
+    "husky": "^0.14.3"
+  },
+  "engines": {
+    "node": ">=8.11.1"
+  }
+}
