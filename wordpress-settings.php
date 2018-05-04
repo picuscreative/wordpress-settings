@@ -148,6 +148,5 @@ function remove_version_para_from_style_and_script( $style_or_js_url ) {
 }
 
 add_filter( 'style_loader_src', 'remove_version_para_from_style_and_script', 10 );
-add_filter( 'script_loader_src', 'remove_version_para_from_style_and_script', 10 );
 
 ?>
