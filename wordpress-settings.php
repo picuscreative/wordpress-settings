@@ -117,13 +117,18 @@ add_action('admin_head', 'remove_notices');
 function login_logo() { ?>
     <style type="text/css">
         body.login div#login h1 a {
-            background-image: url("<?php echo home_url() ?>/wp-content/themes/picus/dist/images/logo.svg");
-            background-position: center;
-            max-width: 100%;
-            width: 100%;
-            height: 200px;
+          display: none !important;
         }
     </style>
+    
+    <script type="application/javascript">
+        document.addEventListener("DOMContentLoaded", function(event) { 
+            var loginElement = document.getElementsByTagName("h1")[0];
+            var img = document.createElement("img");
+            img.setAttribute("src", "<?php echo home_url() ?>/wp-content/themes/picus/dist/images/logo.svg");
+            loginElement.appendChild(img);
+        });
+    </script>
 <?php }
 add_action( 'login_enqueue_scripts', 'login_logo' );
 
@@ -148,5 +153,3 @@ function remove_version_para_from_style_and_script( $style_or_js_url ) {
 }
 
 add_filter( 'style_loader_src', 'remove_version_para_from_style_and_script', 10 );
-
-?>
