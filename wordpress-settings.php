@@ -135,11 +135,9 @@ add_action( 'login_enqueue_scripts', 'login_logo' );
 /*
 Defer script loading so that there is non-blocking javascript
 */
-if (!is_admin()) {
-  add_filter( 'script_loader_tag', function ( $tag, $handle ) {
-    return str_replace( ' src', ' defer src', $tag );
-  }, 10, 2 );
-}
+add_filter( 'script_loader_tag', function ( $tag, $handle ) {
+  return str_replace( ' src', ' defer src', $tag );
+}, 10, 2 );
 
 /*
 Filter to Remove JS and CSS versioning loading to enable proxy server caching
