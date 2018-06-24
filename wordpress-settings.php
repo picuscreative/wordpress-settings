@@ -38,20 +38,11 @@ add_role('client', __( 'Client' ), array(
   'edit_published_pages'  => true,
 ));
 
-function is_admin_user() {
-  $user = wp_get_current_user();
-  if ( is_array( $user->roles ) ) {
-    if ( in_array( 'administrator', $user->roles ) ) {
-      return true;
-    }
-  }
-}
-
 /*
 Remove admin menus
 */
 function remove_admin_menus() {
-  if(!is_admin_user()) {
+  if(!is_admin()) {
     remove_menu_page( 'tools.php' );
     remove_menu_page( 'index.php' );
     remove_menu_page( 'edit-comments.php' );
@@ -67,7 +58,7 @@ add_action( 'admin_menu', 'remove_admin_menus' );
 Remove admin bar menus
 */
 function remove_admin_bar_menus() {
-  if(!is_admin_user()) {
+  if(!is_admin()) {
     global $wp_admin_bar;
     $wp_admin_bar->remove_node('wp-logo');
     $wp_admin_bar->remove_menu('comments');
@@ -81,14 +72,14 @@ add_action( 'wp_before_admin_bar_render', 'remove_admin_bar_menus' );
 Remove versions from admin menu
 */
 function change_footer_admin () {
-  if(!is_admin_user()) {
+  if(!is_admin()) {
     return ' ';
   }
 }
 add_filter('admin_footer_text', 'change_footer_admin', 9999);
 
 function change_footer_version() {
-  if(!is_admin_user()) {
+  if(!is_admin()) {
     return ' ';
   }
 }
@@ -99,7 +90,7 @@ Remove notices from admin menu
 */
 function remove_notices()
 {
-  if(!is_admin_user()) { ?>
+  if(!is_admin()) { ?>
     <style type="text/css">
       .notice,
       .update-nag,
@@ -135,9 +126,11 @@ add_action( 'login_enqueue_scripts', 'login_logo' );
 /*
 Defer script loading so that there is non-blocking javascript
 */
-add_filter( 'script_loader_tag', function ( $tag, $handle ) {
-  return str_replace( ' src', ' defer src', $tag );
-}, 10, 2 );
+if (!is_admin()) {
+  add_filter( 'script_loader_tag', function ( $tag, $handle ) {
+    return str_replace( ' src', ' defer src', $tag );
+  }, 10, 2 );
+}
 
 /*
 Filter to Remove JS and CSS versioning loading to enable proxy server caching
